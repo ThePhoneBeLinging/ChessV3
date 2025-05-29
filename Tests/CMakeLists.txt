@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.31)
-project(Chess_Tests)
+project(ChessV3_Tests)
 
 set(CMAKE_CXX_STANDARD 20)
 
