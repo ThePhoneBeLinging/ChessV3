@@ -35,8 +35,6 @@ public:
 
     static bool isPosInsideBoard(std::pair<int, int> location);
 
-    bool isWhite_;
-
     [[nodiscard]] Pieces getPieceFromLocation(uint64_t bitboard) const;
 
 private:
@@ -78,6 +76,8 @@ private:
     uint64_t blackBishopsBitBoard_;
     uint64_t blackQueensBitBoard_;
     uint64_t blackKingBitBoard_;
+
+    bool isWhite_;
 };
 
 
