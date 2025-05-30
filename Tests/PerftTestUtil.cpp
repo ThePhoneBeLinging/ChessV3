@@ -72,5 +72,4 @@ void PerftTestUtil::recursivePerft(Board board, int depth, int* perftCount)
       return;
     }
   }
-  *perftCount += 1;
 }
