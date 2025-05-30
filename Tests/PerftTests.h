@@ -13,15 +13,16 @@ class PerftTests : public ::testing::Test
 {
 };
 
+constexpr int numThreads = 8;
+
 TEST(PerftTests, test1)
 {
   PerftTestUtil util;
   Board board;
   int total = 0;
   int depth = 1;
-  int threads = 16;
   int expectedResult = 20;
-  auto response = util.PerftTest(board, threads, depth);
+  auto response = util.PerftTest(board, numThreads, depth);
   for (auto result : response)
   {
     total += result.second;
@@ -35,9 +36,8 @@ TEST(PerftTests, test2)
   Board board;
   int total = 0;
   int depth = 2;
-  int threads = 16;
   int expectedResult = 400;
-  auto response = util.PerftTest(board, threads, depth);
+  auto response = util.PerftTest(board, numThreads, depth);
   for (auto result : response)
   {
     total += result.second;
@@ -51,9 +51,8 @@ TEST(PerftTests, test3)
   Board board;
   int total = 0;
   int depth = 3;
-  int threads = 16;
   int expectedResult = 8902;
-  auto response = util.PerftTest(board, threads, depth);
+  auto response = util.PerftTest(board, numThreads, depth);
   for (auto result : response)
   {
     total += result.second;
@@ -67,9 +66,8 @@ TEST(PerftTests, test4)
   Board board;
   int total = 0;
   int depth = 4;
-  int threads = 16;
   int expectedResult = 197281;
-  auto response = util.PerftTest(board, threads, depth);
+  auto response = util.PerftTest(board, numThreads, depth);
   for (auto result : response)
   {
     total += result.second;
@@ -83,9 +81,8 @@ TEST(PerftTests, test5)
   Board board;
   int total = 0;
   int depth = 5;
-  int threads = 16;
   int expectedResult = 4865609;
-  auto response = util.PerftTest(board, threads, depth);
+  auto response = util.PerftTest(board, numThreads, depth);
   for (auto result : response)
   {
     total += result.second;
@@ -100,9 +97,8 @@ TEST(PerftTests, test6)
   Board board;
   int total = 0;
   int depth = 6;
-  int threads = 16;
   int expectedResult = 119060324;
-  auto response = util.PerftTest(board, threads, depth);
+  auto response = util.PerftTest(board, numThreads, depth);
   for (auto result : response)
   {
     total += result.second;
