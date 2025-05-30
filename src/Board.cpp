@@ -339,7 +339,19 @@ std::vector<Move> Board::generateAllPawnMoves(bool isWhite)
             Move move = Move(getBitBoardFromLocation(pair),
                              getBitBoardFromLocation(std::pair(pair.first, pair.second + 1)));
             move.promotion = 'Q';
-            // TODO FINISH PROMOTION
+            moves.push_back(move);
+
+            move.promotion = 'N';
+            moves.push_back(move);
+
+            move.promotion = 'B';
+            moves.push_back(move);
+
+            move.promotion = 'R';
+            moves.push_back(move);
+
+            move.promotion = 'P';
+            moves.push_back(move);
         }
     }
 
