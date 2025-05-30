@@ -4,6 +4,7 @@
 
 #ifndef PERFTTESTS_H
 #define PERFTTESTS_H
+#include <thread>
 #include <gtest/gtest.h>
 
 #include "PerftTestUtil.h"
@@ -13,7 +14,8 @@ class PerftTests : public ::testing::Test
 {
 };
 
-constexpr int numThreads = 8;
+const auto processor_count = std::thread::hardware_concurrency();
+const int numThreads = processor_count == 0 ? 8 : processor_count;
 
 TEST(PerftTests, test1)
 {
