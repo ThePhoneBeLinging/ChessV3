@@ -5,7 +5,8 @@
 #include "Board.h"
 #include <iostream>
 
-Board::Board() : lastWhiteMove_(0, 0), lastBlackMove_(0, 0)
+Board::Board() : lastWhiteMove_(0, 0), lastBlackMove_(0, 0),whiteCanCastleKingSide_(true),
+                 whiteCanCastleQueenSide_(true), blackCanCastleKingSide_(true), blackCanCastleQueenSide_(true)
 {
     isWhite_ = true;
     // Initialize white pieces
@@ -23,6 +24,51 @@ Board::Board() : lastWhiteMove_(0, 0), lastBlackMove_(0, 0)
     blackBishopsBitBoard_ = 0x2400000000000000;
     blackQueensBitBoard_ = 0x0800000000000000;
     blackKingBitBoard_ = 0x1000000000000000;
+}
+
+Board::Board(const std::string& fenString)
+    : lastWhiteMove_(0, 0), lastBlackMove_(0, 0), whitePawnsBitBoard_(0), whiteRooksBitBoard_(0),
+whiteBishopsBitBoard_(0), whiteKingBitBoard_(0),whiteCanCastleKingSide_(false),whiteCanCastleQueenSide_(false),whiteKnightsBitBoard_(0)
+, whiteQueensBitBoard_(0), blackBishopsBitBoard_(0), blackCanCastleKingSide_(false), blackCanCastleQueenSide_(false),
+blackKingBitBoard_(0), blackKnightsBitBoard_(0),blackPawnsBitBoard_(0),blackQueensBitBoard_(0),blackRooksBitBoard_(0),isWhite_(true)
+{
+    uint64_t currentPosition = 0x8000000000000000;
+    for (const auto& character : fenString)
+    {
+        switch (character)
+        {
+            case 'P': {whitePawnsBitBoard_ |= currentPosition; break;}
+            case 'R': {whiteRooksBitBoard_ |= currentPosition; break;}
+            case 'B': {whiteBishopsBitBoard_ |= currentPosition; break;}
+            case 'Q': {whiteQueensBitBoard_ |= currentPosition; break;}
+            case 'K': {whiteKingBitBoard_ |= currentPosition; break;}
+            case 'N': {whiteKnightsBitBoard_ |= currentPosition; break;}
+
+            case 'p': {blackPawnsBitBoard_ |= currentPosition; break;}
+            case 'r': {blackRooksBitBoard_ |= currentPosition; break;}
+            case 'b': {blackBishopsBitBoard_ |= currentPosition; break;}
+            case 'q': {blackQueensBitBoard_ |= currentPosition; break;}
+            case 'k': {blackKingBitBoard_ |= currentPosition; break;}
+            case 'n': {blackKnightsBitBoard_|= currentPosition; break;}
+
+            case '1': {currentPosition = currentPosition >> 1; continue;}
+            case '2': {currentPosition = currentPosition >> 2; continue;}
+            case '3': {currentPosition = currentPosition >> 3; continue;}
+            case '4': {currentPosition = currentPosition >> 4; continue;}
+            case '5': {currentPosition = currentPosition >> 5; continue;}
+            case '6': {currentPosition = currentPosition >> 6; continue;}
+            case '7': {currentPosition = currentPosition >> 7; continue;}
+            case '8': {currentPosition = currentPosition >> 8; continue;}
+            case ' ': {break;}
+            case '/':
+            default: continue;
+        }
+        currentPosition = currentPosition >> 1;
+        if (character == ' ')
+        {
+            break;
+        }
+    }
 }
 
 

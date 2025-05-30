@@ -8,6 +8,7 @@ set(SOURCES
         PerftTestUtil.cpp
         PerftTestUtil.h
         ../src/Board.cpp
+        FenTests.cpp
 )
 add_executable(Chess_Tests ${SOURCES})
 

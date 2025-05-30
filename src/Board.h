@@ -17,6 +17,8 @@ class Board
 public:
     Board();
 
+    explicit Board(const std::string& fenString);
+
     Board(const Board& board) = default;
 
     std::vector<Move> generateAllLegalMoves();
@@ -78,6 +80,12 @@ private:
     uint64_t blackKingBitBoard_;
 
     bool isWhite_;
+
+    bool whiteCanCastleKingSide_;
+    bool whiteCanCastleQueenSide_;
+
+    bool blackCanCastleKingSide_;
+    bool blackCanCastleQueenSide_;
 };
 
 
