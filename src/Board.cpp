@@ -33,40 +33,72 @@ whiteBishopsBitBoard_(0), whiteKingBitBoard_(0),whiteCanCastleKingSide_(false),w
 blackKingBitBoard_(0), blackKnightsBitBoard_(0),blackPawnsBitBoard_(0),blackQueensBitBoard_(0),blackRooksBitBoard_(0),isWhite_(true)
 {
     uint64_t currentPosition = 0x8000000000000000;
+    int index = 0;
     for (const auto& character : fenString)
     {
-        switch (character)
-        {
-            case 'P': {whitePawnsBitBoard_ |= currentPosition; break;}
-            case 'R': {whiteRooksBitBoard_ |= currentPosition; break;}
-            case 'B': {whiteBishopsBitBoard_ |= currentPosition; break;}
-            case 'Q': {whiteQueensBitBoard_ |= currentPosition; break;}
-            case 'K': {whiteKingBitBoard_ |= currentPosition; break;}
-            case 'N': {whiteKnightsBitBoard_ |= currentPosition; break;}
-
-            case 'p': {blackPawnsBitBoard_ |= currentPosition; break;}
-            case 'r': {blackRooksBitBoard_ |= currentPosition; break;}
-            case 'b': {blackBishopsBitBoard_ |= currentPosition; break;}
-            case 'q': {blackQueensBitBoard_ |= currentPosition; break;}
-            case 'k': {blackKingBitBoard_ |= currentPosition; break;}
-            case 'n': {blackKnightsBitBoard_|= currentPosition; break;}
-
-            case '1': {currentPosition = currentPosition >> 1; continue;}
-            case '2': {currentPosition = currentPosition >> 2; continue;}
-            case '3': {currentPosition = currentPosition >> 3; continue;}
-            case '4': {currentPosition = currentPosition >> 4; continue;}
-            case '5': {currentPosition = currentPosition >> 5; continue;}
-            case '6': {currentPosition = currentPosition >> 6; continue;}
-            case '7': {currentPosition = currentPosition >> 7; continue;}
-            case '8': {currentPosition = currentPosition >> 8; continue;}
-            case ' ': {break;}
-            case '/':
-            default: continue;
-        }
-        currentPosition = currentPosition >> 1;
         if (character == ' ')
         {
-            break;
+            index++;
+        }
+        if (index == 0)
+        {
+            switch (character)
+            {
+                case 'P': {whitePawnsBitBoard_ |= currentPosition; break;}
+                case 'R': {whiteRooksBitBoard_ |= currentPosition; break;}
+                case 'B': {whiteBishopsBitBoard_ |= currentPosition; break;}
+                case 'Q': {whiteQueensBitBoard_ |= currentPosition; break;}
+                case 'K': {whiteKingBitBoard_ |= currentPosition; break;}
+                case 'N': {whiteKnightsBitBoard_ |= currentPosition; break;}
+
+                case 'p': {blackPawnsBitBoard_ |= currentPosition; break;}
+                case 'r': {blackRooksBitBoard_ |= currentPosition; break;}
+                case 'b': {blackBishopsBitBoard_ |= currentPosition; break;}
+                case 'q': {blackQueensBitBoard_ |= currentPosition; break;}
+                case 'k': {blackKingBitBoard_ |= currentPosition; break;}
+                case 'n': {blackKnightsBitBoard_|= currentPosition; break;}
+
+                case '1': {currentPosition = currentPosition >> 1; continue;}
+                case '2': {currentPosition = currentPosition >> 2; continue;}
+                case '3': {currentPosition = currentPosition >> 3; continue;}
+                case '4': {currentPosition = currentPosition >> 4; continue;}
+                case '5': {currentPosition = currentPosition >> 5; continue;}
+                case '6': {currentPosition = currentPosition >> 6; continue;}
+                case '7': {currentPosition = currentPosition >> 7; continue;}
+                case '8': {currentPosition = currentPosition >> 8; continue;}
+                case ' ': {break;}
+                case '/':
+                default: continue;
+            }
+            currentPosition = currentPosition >> 1;
+        }
+        if (index == 1)
+        {
+            switch (character)
+            {
+                case 'w': {isWhite_=true; break;}
+                case 'b': {isWhite_=false; break;}
+                default: {break;}
+            }
+        }
+        if (index == 2)
+        {
+            switch (character)
+            {
+                case 'K': {whiteCanCastleKingSide_ = true;break;}
+                case 'Q': {whiteCanCastleQueenSide_ = true;break;}
+                case 'k': {blackCanCastleKingSide_ = true; break;}
+                case 'q': {blackCanCastleQueenSide_ = true; break;}
+                default: {break;}
+                }
+        }
+        if (index == 3)
+        {
+            if (character == '-')
+            {
+                lastWhiteMove_ = Move(-1,-1);
+                lastBlackMove_ = Move(-1,-1);
+            }
         }
     }
 }
