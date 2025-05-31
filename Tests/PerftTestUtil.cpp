@@ -61,15 +61,15 @@ void PerftTestUtil::recursivePerft(Board board, int depth, int* perftCount)
     return;
   }
   auto legalMoves = board.generateAllLegalMoves();
-  for (int i = 0; i < legalMoves.size(); i++)
+  if (legalMoves.empty())
   {
-    auto move = legalMoves[i];
+    (*perftCount)++;
+    return;
+  }
+  for (const auto& move : legalMoves)
+  {
     Board newBoard(board);
     newBoard.executeMove(move);
     recursivePerft(newBoard, depth - 1, perftCount);
-    if (i == legalMoves.size() - 1)
-    {
-      return;
-    }
   }
 }

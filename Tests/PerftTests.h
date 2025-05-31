@@ -108,5 +108,133 @@ TEST(PerftTests, test6)
   EXPECT_EQ(total, expectedResult);
 }
 
+TEST(PerftTests, test7)
+{
+  PerftTestUtil util;
+  std::string fenString = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
+  Board board(fenString);
+  int total = 0;
+  int depth = 1;
+  int expectedResult = 48;
+  auto response = util.PerftTest(board, numThreads, depth);
+  for (auto result : response)
+  {
+    total += result.second;
+  }
+  EXPECT_EQ(total, expectedResult);
+}
+
+TEST(PerftTests, test8)
+{
+  PerftTestUtil util;
+  std::string fenString = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
+  Board board(fenString);
+  int total = 0;
+  int depth = 2;
+  int expectedResult = 2039;
+  auto response = util.PerftTest(board, numThreads, depth);
+  for (auto result : response)
+  {
+    total += result.second;
+  }
+  EXPECT_EQ(total, expectedResult);
+}
+
+
+TEST(PerftTests, test9)
+{
+  PerftTestUtil util;
+  std::string fenString = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
+  Board board(fenString);
+  int total = 0;
+  int depth = 3;
+  int expectedResult = 97862;
+  auto response = util.PerftTest(board, numThreads, depth);
+  for (auto result : response)
+  {
+    total += result.second;
+  }
+  EXPECT_EQ(total, expectedResult);
+}
+
+TEST(PerftTests, test10)
+{
+  PerftTestUtil util;
+  std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
+  Board board(fenString);
+  int total = 0;
+  int depth = 1;
+  int expectedResult = 14;
+  auto response = util.PerftTest(board, numThreads, depth);
+  for (auto result : response)
+  {
+    total += result.second;
+  }
+  EXPECT_EQ(total, expectedResult);
+}
+
+TEST(PerftTests, test11)
+{
+  PerftTestUtil util;
+  std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
+  Board board(fenString);
+  int total = 0;
+  int depth = 2;
+  int expectedResult = 191;
+  auto response = util.PerftTest(board, numThreads, depth);
+  for (auto result : response)
+  {
+    total += result.second;
+  }
+  EXPECT_EQ(total, expectedResult);
+}
+
+TEST(PerftTests, test12)
+{
+  PerftTestUtil util;
+  std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
+  Board board(fenString);
+  int total = 0;
+  int depth = 3;
+  int expectedResult = 2812;
+  auto response = util.PerftTest(board, numThreads, depth);
+  for (auto result : response)
+  {
+    total += result.second;
+  }
+  EXPECT_EQ(total, expectedResult);
+}
+
+TEST(PerftTests, test13)
+{
+  PerftTestUtil util;
+  std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
+  Board board(fenString);
+  int total = 0;
+  int depth = 4;
+  int expectedResult = 43238;
+  auto response = util.PerftTest(board, numThreads, depth);
+  for (auto result : response)
+  {
+    total += result.second;
+  }
+  EXPECT_EQ(total, expectedResult);
+}
+
+TEST(PerftTests, test14)
+{
+  PerftTestUtil util;
+  std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
+  Board board(fenString);
+  int total = 0;
+  int depth = 5;
+  int expectedResult = 674624;
+  auto response = util.PerftTest(board, numThreads, depth);
+  for (auto result : response)
+  {
+    total += result.second;
+  }
+  EXPECT_EQ(total, expectedResult);
+}
 
 #endif //PERFTTESTS_H
