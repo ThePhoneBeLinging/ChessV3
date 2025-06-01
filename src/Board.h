@@ -44,6 +44,10 @@ private:
 
     [[nodiscard]] bool isMoveLegal(const Move& move, bool isWhite);
 
+    [[nodiscard]] bool canCastleKingSide();
+
+    [[nodiscard]] bool canCastleQueenSide();
+
     [[nodiscard]] bool isTileOccupiedByColor(std::pair<int, int> location, bool isWhite) const;
 
 

@@ -175,7 +175,20 @@ void Board::executeMove(Move move)
     else
     {
         lastBlackMove_ = move;
-    } // TODO Could speed this by taking color as an argument
+    }
+    if (move.isCastle)
+    {
+        if (isWhite_)
+        {
+            whiteCanCastleKingSide_ = false;
+            whiteCanCastleQueenSide_ = false;
+        }
+        else
+        {
+            blackCanCastleKingSide_ = false;
+            blackCanCastleQueenSide_ = false;
+        }
+    }
     uint64_t fromBitBoard = move.from;
     uint64_t toBitBoard = move.to;
     uint64_t capturedPiece = move.capturedPiece;
@@ -249,6 +262,96 @@ bool Board::isMoveLegal(const Move& move, bool isWhite)
     }
 
     return true; // Move is legal
+}
+
+bool Board::canCastleKingSide()
+{
+    if (isWhite_)
+    {
+        if (not whiteCanCastleKingSide_)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if (not blackCanCastleKingSide_)
+        {
+            return false;
+        }
+    }
+    auto tempBoard = Board(*this);
+    uint64_t kingPos = isWhite_ ? whiteKingBitBoard_ : blackKingBitBoard_;
+    auto opponentMoves = tempBoard.generatePseudoLegalMoves(!isWhite_);
+    for (int i = 0; i < 3; i++)
+    {
+        for (const auto& opponentMove : opponentMoves)
+        {
+            if (opponentMove.to == kingPos)
+            {
+                return false; // King is in check
+            }
+            if ((getWhiteBitBoard() | getBlackBitBoard()) & kingPos != 0)
+            {
+                return false;
+            }
+        }
+        if (isWhite_)
+        {
+            kingPos = kingPos >> 1;
+        }
+        else
+        {
+            kingPos = kingPos << 1;
+        }
+    }
+    return true;
+}
+
+bool Board::canCastleQueenSide()
+{
+    if (isWhite_)
+    {
+        if (not whiteCanCastleQueenSide_)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if (not blackCanCastleQueenSide_)
+        {
+            return false;
+        }
+    }
+
+    auto tempBoard = Board(*this);
+    uint64_t kingPos = isWhite_ ? whiteKingBitBoard_ : blackKingBitBoard_;
+    auto opponentMoves = tempBoard.generatePseudoLegalMoves(!isWhite_);
+    for (int i = 0; i < 3; i++)
+    {
+        for (const auto& opponentMove : opponentMoves)
+        {
+            if (opponentMove.to == kingPos)
+            {
+                return false; // King is in check
+            }
+            if ((getWhiteBitBoard() | getBlackBitBoard()) & kingPos != 0)
+            {
+                return false;
+            }
+        }
+        if (isWhite_)
+        {
+            kingPos = kingPos << 1;
+        }
+        else
+        {
+            kingPos = kingPos >> 1;
+        }
+    }
+
+    return true;
 }
 
 bool Board::isTileOccupiedByColor(std::pair<int, int> location, bool isWhite) const
@@ -477,7 +580,7 @@ std::vector<Move> Board::generateAllKingMoves(bool isWhite)
     std::vector<Move> moves;
 
     auto locationOfPieces = getAllPieces(Pieces::King, isWhite);
-
+    assert(locationOfPieces.size() == 1);
     for (auto& pair : locationOfPieces)
     {
         for (int i = -1; i < 2; i++)
@@ -495,6 +598,21 @@ std::vector<Move> Board::generateAllKingMoves(bool isWhite)
                 }
                 moves.emplace_back(getBitBoardFromLocation(pair), getBitBoardFromLocation(newLocation));
             }
+        }
+    }
+    if (isWhite == isWhite_)
+    {
+        if (canCastleKingSide())
+        {
+            int offset = isWhite ? 2 : -2;
+            moves.emplace_back(getBitBoardFromLocation(locationOfPieces[0]),getBitBoardFromLocation({locationOfPieces[0].first + offset,locationOfPieces[0].second}));
+            moves.back().isCastle = true;
+        }
+        if (canCastleQueenSide())
+        {
+            int offset = isWhite ? 3 : -3;
+            moves.emplace_back(getBitBoardFromLocation(locationOfPieces[0]),getBitBoardFromLocation({locationOfPieces[0].first + offset,locationOfPieces[0].second}));
+            moves.back().isCastle = true;
         }
     }
 
