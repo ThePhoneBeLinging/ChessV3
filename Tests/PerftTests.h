@@ -17,7 +17,7 @@ class PerftTests : public ::testing::Test
 const auto processor_count = std::thread::hardware_concurrency();
 const int numThreads = processor_count == 0 ? 8 : processor_count;
 
-TEST(PerftTests, test1)
+TEST(StartPos, Test1)
 {
   PerftTestUtil util;
   Board board;
@@ -32,7 +32,7 @@ TEST(PerftTests, test1)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test2)
+TEST(StartPos, StartPostest2)
 {
   PerftTestUtil util;
   Board board;
@@ -47,7 +47,7 @@ TEST(PerftTests, test2)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test3)
+TEST(StartPos, test3)
 {
   PerftTestUtil util;
   Board board;
@@ -62,7 +62,7 @@ TEST(PerftTests, test3)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test4)
+TEST(StartPos, test4)
 {
   PerftTestUtil util;
   Board board;
@@ -77,7 +77,7 @@ TEST(PerftTests, test4)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test5)
+TEST(StartPos, test5)
 {
   PerftTestUtil util;
   Board board;
@@ -93,7 +93,7 @@ TEST(PerftTests, test5)
 }
 
 
-TEST(PerftTests, test6)
+TEST(StartPos, test6)
 {
   PerftTestUtil util;
   Board board;
@@ -108,7 +108,7 @@ TEST(PerftTests, test6)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test7)
+TEST(r3k2r, test1)
 {
   PerftTestUtil util;
   std::string fenString = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
@@ -124,7 +124,7 @@ TEST(PerftTests, test7)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test8)
+TEST(r3k2r, test2)
 {
   PerftTestUtil util;
   std::string fenString = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
@@ -141,7 +141,7 @@ TEST(PerftTests, test8)
 }
 
 
-TEST(PerftTests, test9)
+TEST(r3k2r, test3)
 {
   PerftTestUtil util;
   std::string fenString = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
@@ -157,7 +157,7 @@ TEST(PerftTests, test9)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test10)
+TEST(empty2p5, test1)
 {
   PerftTestUtil util;
   std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
@@ -173,7 +173,7 @@ TEST(PerftTests, test10)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test11)
+TEST(empty2p5, test2)
 {
   PerftTestUtil util;
   std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
@@ -189,7 +189,7 @@ TEST(PerftTests, test11)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test12)
+TEST(empty2p5, test3)
 {
   PerftTestUtil util;
   std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
@@ -205,7 +205,7 @@ TEST(PerftTests, test12)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test13)
+TEST(empty2p5, test4)
 {
   PerftTestUtil util;
   std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
@@ -221,7 +221,7 @@ TEST(PerftTests, test13)
   EXPECT_EQ(total, expectedResult);
 }
 
-TEST(PerftTests, test14)
+TEST(empty2p5, test5)
 {
   PerftTestUtil util;
   std::string fenString = "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1";
