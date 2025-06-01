@@ -283,15 +283,11 @@ bool Board::canCastleKingSide()
     auto tempBoard = Board(*this);
     uint64_t kingPos = isWhite_ ? whiteKingBitBoard_ : blackKingBitBoard_;
     auto opponentMoves = tempBoard.generatePseudoLegalMoves(!isWhite_);
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 2; i++)
     {
         for (const auto& opponentMove : opponentMoves)
         {
             if (opponentMove.to == kingPos)
-            {
-                return false; // King is in check
-            }
-            if ((getWhiteBitBoard() | getBlackBitBoard()) & kingPos != 0)
             {
                 return false;
             }
@@ -303,6 +299,10 @@ bool Board::canCastleKingSide()
         else
         {
             kingPos = kingPos << 1;
+        }
+        if (((getWhiteBitBoard() | getBlackBitBoard()) & kingPos) != 0)
+        {
+            return false;
         }
     }
     return true;
@@ -336,10 +336,7 @@ bool Board::canCastleQueenSide()
             {
                 return false; // King is in check
             }
-            if ((getWhiteBitBoard() | getBlackBitBoard()) & kingPos != 0)
-            {
-                return false;
-            }
+
         }
         if (isWhite_)
         {
@@ -348,6 +345,10 @@ bool Board::canCastleQueenSide()
         else
         {
             kingPos = kingPos >> 1;
+        }
+        if (((getWhiteBitBoard() | getBlackBitBoard()) & kingPos) != 0)
+        {
+            return false;
         }
     }
 

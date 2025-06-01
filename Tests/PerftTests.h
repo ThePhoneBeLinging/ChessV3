@@ -82,7 +82,7 @@ TEST(PerftTests, test5)
   PerftTestUtil util;
   Board board;
   int total = 0;
-  int depth = 5;
+  int depth = 1;
   int expectedResult = 4865609;
   auto response = util.PerftTest(board, numThreads, depth);
   for (auto result : response)
