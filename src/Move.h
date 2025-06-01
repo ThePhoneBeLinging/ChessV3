@@ -10,7 +10,7 @@
 class Move
 {
 public:
-    Move(uint64_t from, uint64_t to) : from(from), to(to), promotion(0), isCastle(false)
+    Move(uint64_t from, uint64_t to) : from(from), to(to), promotion(0), isCastle(false), leftCastle(false)
     {
     };
 
@@ -23,6 +23,7 @@ public:
     uint64_t to;
     char promotion;
     bool isCastle;
+    bool leftCastle;
     uint64_t capturedPiece = 0;
 
     std::string toString() const

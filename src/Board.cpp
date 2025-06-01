@@ -176,18 +176,78 @@ void Board::executeMove(Move move)
     {
         lastBlackMove_ = move;
     }
+
+    if (whiteKingBitBoard_ & move.from == 0)
+    {
+        whiteCanCastleKingSide_ = false;
+        whiteCanCastleQueenSide_ = false;
+    }
+    else if (blackKingBitBoard_ & move.from == 0)
+    {
+        blackCanCastleKingSide_ = false;
+        blackCanCastleQueenSide_ = false;
+    }
+    // Top left corner
+    else if (0x8000000000000000 & move.from == 0)
+    {
+        blackCanCastleKingSide_ = false;
+    }
+    else if (0x0100000000000000 & move.from == 0)
+    {
+        blackCanCastleQueenSide_ = false;
+    }
+    else if (0x0000000000000001 & move.from == 0)
+    {
+        whiteCanCastleKingSide_ = false;
+    }
+    else if (0x0000000000000080 & move.from == 0)
+    {
+        whiteCanCastleQueenSide_ = false;
+    }
+
     if (move.isCastle)
     {
+        uint64_t kingFrom;
+        uint64_t rookFrom;
+        uint64_t kingTo;
+        uint64_t rookTo;
+        if (move.leftCastle)
+        {
+            kingFrom = move.from;
+            rookFrom = kingFrom << isWhite_ ? 4 : 3;
+            kingTo = move.to;
+            rookTo = move.to << 1;
+        }
+        else
+        {
+            kingFrom = move.from;
+            rookFrom = kingFrom >> isWhite_ ? 3 : 4;
+            kingTo = move.to;
+            rookTo = move.to >> 1;
+        }
         if (isWhite_)
         {
+            whiteKingBitBoard_ &= ~kingFrom;
+            whiteRooksBitBoard_ &= ~rookFrom;
+
+            whiteKingBitBoard_ |= kingTo;
+            whiteRooksBitBoard_ |= rookTo;
+
             whiteCanCastleKingSide_ = false;
             whiteCanCastleQueenSide_ = false;
         }
         else
         {
+            blackKingBitBoard_ &= ~kingFrom;
+            blackRooksBitBoard_ &= ~rookFrom;
+
+            blackKingBitBoard_ |= kingTo;
+            blackRooksBitBoard_ |= rookTo;
+
             blackCanCastleKingSide_ = false;
             blackCanCastleQueenSide_ = false;
         }
+        return;
     }
     uint64_t fromBitBoard = move.from;
     uint64_t toBitBoard = move.to;
@@ -608,12 +668,14 @@ std::vector<Move> Board::generateAllKingMoves(bool isWhite)
             int offset = isWhite ? 2 : -2;
             moves.emplace_back(getBitBoardFromLocation(locationOfPieces[0]),getBitBoardFromLocation({locationOfPieces[0].first + offset,locationOfPieces[0].second}));
             moves.back().isCastle = true;
+            moves.back().leftCastle = !isWhite_;
         }
         if (canCastleQueenSide())
         {
             int offset = isWhite ? 3 : -3;
             moves.emplace_back(getBitBoardFromLocation(locationOfPieces[0]),getBitBoardFromLocation({locationOfPieces[0].first + offset,locationOfPieces[0].second}));
             moves.back().isCastle = true;
+            moves.back().leftCastle = isWhite_;
         }
     }
 
