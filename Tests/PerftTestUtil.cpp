@@ -67,4 +67,8 @@ void PerftTestUtil::recursivePerft(Board board, int depth, int* perftCount)
     newBoard.executeMove(move);
     recursivePerft(newBoard, depth - 1, perftCount);
   }
+  if (legalMoves.size() == 0)
+  {
+    (*perftCount)++;
+  }
 }
