@@ -82,7 +82,7 @@ TEST(StartPos, test5)
   PerftTestUtil util;
   Board board;
   int total = 0;
-  int depth = 1;
+  int depth = 5;
   int expectedResult = 4865609;
   auto response = util.PerftTest(board, numThreads, depth);
   for (auto result : response)
@@ -98,7 +98,7 @@ TEST(StartPos, test6)
   PerftTestUtil util;
   Board board;
   int total = 0;
-  int depth = 1;
+  int depth = 6;
   int expectedResult = 119060324;
   auto response = util.PerftTest(board, numThreads, depth);
   for (auto result : response)

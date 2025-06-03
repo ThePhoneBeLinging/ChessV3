@@ -5,7 +5,7 @@
 #include "Board.h"
 #include <iostream>
 
-Board::Board() : lastWhiteMove_(0, 0), lastBlackMove_(0, 0),whiteCanCastleKingSide_(true),
+Board::Board() : lastWhiteMove_(0, 0), lastBlackMove_(0, 0), whiteCanCastleKingSide_(true),
                  whiteCanCastleQueenSide_(true), blackCanCastleKingSide_(true), blackCanCastleQueenSide_(true)
 {
     isWhite_ = true;
@@ -28,9 +28,12 @@ Board::Board() : lastWhiteMove_(0, 0), lastBlackMove_(0, 0),whiteCanCastleKingSi
 
 Board::Board(const std::string& fenString)
     : lastWhiteMove_(0, 0), lastBlackMove_(0, 0), whitePawnsBitBoard_(0), whiteRooksBitBoard_(0),
-whiteBishopsBitBoard_(0), whiteKingBitBoard_(0),whiteCanCastleKingSide_(false),whiteCanCastleQueenSide_(false),whiteKnightsBitBoard_(0)
-, whiteQueensBitBoard_(0), blackBishopsBitBoard_(0), blackCanCastleKingSide_(false), blackCanCastleQueenSide_(false),
-blackKingBitBoard_(0), blackKnightsBitBoard_(0),blackPawnsBitBoard_(0),blackQueensBitBoard_(0),blackRooksBitBoard_(0),isWhite_(true)
+      whiteBishopsBitBoard_(0), whiteKingBitBoard_(0), whiteCanCastleKingSide_(false), whiteCanCastleQueenSide_(false),
+      whiteKnightsBitBoard_(0)
+      , whiteQueensBitBoard_(0), blackBishopsBitBoard_(0), blackCanCastleKingSide_(false),
+      blackCanCastleQueenSide_(false),
+      blackKingBitBoard_(0), blackKnightsBitBoard_(0), blackPawnsBitBoard_(0), blackQueensBitBoard_(0),
+      blackRooksBitBoard_(0), isWhite_(true)
 {
     uint64_t currentPosition = 0x8000000000000000;
     int index = 0;
@@ -44,29 +47,109 @@ blackKingBitBoard_(0), blackKnightsBitBoard_(0),blackPawnsBitBoard_(0),blackQuee
         {
             switch (character)
             {
-                case 'P': {whitePawnsBitBoard_ |= currentPosition; break;}
-                case 'R': {whiteRooksBitBoard_ |= currentPosition; break;}
-                case 'B': {whiteBishopsBitBoard_ |= currentPosition; break;}
-                case 'Q': {whiteQueensBitBoard_ |= currentPosition; break;}
-                case 'K': {whiteKingBitBoard_ |= currentPosition; break;}
-                case 'N': {whiteKnightsBitBoard_ |= currentPosition; break;}
+                case 'P':
+                    {
+                        whitePawnsBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'R':
+                    {
+                        whiteRooksBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'B':
+                    {
+                        whiteBishopsBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'Q':
+                    {
+                        whiteQueensBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'K':
+                    {
+                        whiteKingBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'N':
+                    {
+                        whiteKnightsBitBoard_ |= currentPosition;
+                        break;
+                    }
 
-                case 'p': {blackPawnsBitBoard_ |= currentPosition; break;}
-                case 'r': {blackRooksBitBoard_ |= currentPosition; break;}
-                case 'b': {blackBishopsBitBoard_ |= currentPosition; break;}
-                case 'q': {blackQueensBitBoard_ |= currentPosition; break;}
-                case 'k': {blackKingBitBoard_ |= currentPosition; break;}
-                case 'n': {blackKnightsBitBoard_|= currentPosition; break;}
+                case 'p':
+                    {
+                        blackPawnsBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'r':
+                    {
+                        blackRooksBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'b':
+                    {
+                        blackBishopsBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'q':
+                    {
+                        blackQueensBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'k':
+                    {
+                        blackKingBitBoard_ |= currentPosition;
+                        break;
+                    }
+                case 'n':
+                    {
+                        blackKnightsBitBoard_ |= currentPosition;
+                        break;
+                    }
 
-                case '1': {currentPosition = currentPosition >> 1; continue;}
-                case '2': {currentPosition = currentPosition >> 2; continue;}
-                case '3': {currentPosition = currentPosition >> 3; continue;}
-                case '4': {currentPosition = currentPosition >> 4; continue;}
-                case '5': {currentPosition = currentPosition >> 5; continue;}
-                case '6': {currentPosition = currentPosition >> 6; continue;}
-                case '7': {currentPosition = currentPosition >> 7; continue;}
-                case '8': {currentPosition = currentPosition >> 8; continue;}
-                case ' ': {break;}
+                case '1':
+                    {
+                        currentPosition = currentPosition >> 1;
+                        continue;
+                    }
+                case '2':
+                    {
+                        currentPosition = currentPosition >> 2;
+                        continue;
+                    }
+                case '3':
+                    {
+                        currentPosition = currentPosition >> 3;
+                        continue;
+                    }
+                case '4':
+                    {
+                        currentPosition = currentPosition >> 4;
+                        continue;
+                    }
+                case '5':
+                    {
+                        currentPosition = currentPosition >> 5;
+                        continue;
+                    }
+                case '6':
+                    {
+                        currentPosition = currentPosition >> 6;
+                        continue;
+                    }
+                case '7':
+                    {
+                        currentPosition = currentPosition >> 7;
+                        continue;
+                    }
+                case '8':
+                    {
+                        currentPosition = currentPosition >> 8;
+                        continue;
+                    }
+                case ' ': { break; }
                 case '/':
                 default: continue;
             }
@@ -76,28 +159,52 @@ blackKingBitBoard_(0), blackKnightsBitBoard_(0),blackPawnsBitBoard_(0),blackQuee
         {
             switch (character)
             {
-                case 'w': {isWhite_=true; break;}
-                case 'b': {isWhite_=false; break;}
-                default: {break;}
+                case 'w':
+                    {
+                        isWhite_ = true;
+                        break;
+                    }
+                case 'b':
+                    {
+                        isWhite_ = false;
+                        break;
+                    }
+                default: { break; }
             }
         }
         if (index == 2)
         {
             switch (character)
             {
-                case 'K': {whiteCanCastleKingSide_ = true;break;}
-                case 'Q': {whiteCanCastleQueenSide_ = true;break;}
-                case 'k': {blackCanCastleKingSide_ = true; break;}
-                case 'q': {blackCanCastleQueenSide_ = true; break;}
-                default: {break;}
-                }
+                case 'K':
+                    {
+                        whiteCanCastleKingSide_ = true;
+                        break;
+                    }
+                case 'Q':
+                    {
+                        whiteCanCastleQueenSide_ = true;
+                        break;
+                    }
+                case 'k':
+                    {
+                        blackCanCastleKingSide_ = true;
+                        break;
+                    }
+                case 'q':
+                    {
+                        blackCanCastleQueenSide_ = true;
+                        break;
+                    }
+                default: { break; }
+            }
         }
         if (index == 3)
         {
             if (character == '-')
             {
-                lastWhiteMove_ = Move(-1,-1);
-                lastBlackMove_ = Move(-1,-1);
+                lastWhiteMove_ = Move(-1, -1);
+                lastBlackMove_ = Move(-1, -1);
             }
         }
     }
@@ -161,12 +268,12 @@ std::vector<std::pair<int, int>> Board::getAllPieces(Pieces piece, bool isWhite)
     return locations;
 }
 
-uint64_t Board::getBitBoardFromLocation(std::pair<int, int> location)
+uint64_t Board::getBitBoardFromLocation(const std::pair<int, int>& location)
 {
     return 1ULL << (location.first + location.second * 8);
 }
 
-void Board::executeMove(Move move)
+void Board::executeMove(const Move& move)
 {
     if (isWhite_)
     {
@@ -396,7 +503,6 @@ bool Board::canCastleQueenSide()
             {
                 return false; // King is in check
             }
-
         }
         if (isWhite_)
         {
@@ -415,19 +521,19 @@ bool Board::canCastleQueenSide()
     return true;
 }
 
-bool Board::isTileOccupiedByColor(std::pair<int, int> location, bool isWhite) const
+bool Board::isTileOccupiedByColor(const std::pair<int, int>& location, const bool isWhite) const
 {
     auto bitBoardOfPos = getBitBoardFromLocation(location);
     auto bitBoardOfColor = isWhite ? getWhiteBitBoard() : getBlackBitBoard();
     return bitBoardOfPos & bitBoardOfColor;
 }
 
-bool Board::isPosInsideBoard(std::pair<int, int> location)
+bool Board::isPosInsideBoard(const std::pair<int, int>& location)
 {
     return location.first >= 0 && location.first < 8 && location.second >= 0 && location.second < 8;
 }
 
-Pieces Board::getPieceFromLocation(uint64_t bitboard) const
+Pieces Board::getPieceFromLocation(const uint64_t bitboard) const
 {
     if ((whitePawnsBitBoard_ | blackPawnsBitBoard_) & bitboard) return Pieces::Pawn;
     if ((whiteRooksBitBoard_ | blackRooksBitBoard_) & bitboard) return Pieces::Rook;
@@ -666,14 +772,18 @@ std::vector<Move> Board::generateAllKingMoves(bool isWhite)
         if (canCastleKingSide())
         {
             int offset = isWhite ? 2 : -2;
-            moves.emplace_back(getBitBoardFromLocation(locationOfPieces[0]),getBitBoardFromLocation({locationOfPieces[0].first + offset,locationOfPieces[0].second}));
+            moves.emplace_back(getBitBoardFromLocation(locationOfPieces[0]), getBitBoardFromLocation({
+                                   locationOfPieces[0].first + offset, locationOfPieces[0].second
+                               }));
             moves.back().isCastle = true;
             moves.back().leftCastle = !isWhite_;
         }
         if (canCastleQueenSide())
         {
             int offset = isWhite ? 3 : -3;
-            moves.emplace_back(getBitBoardFromLocation(locationOfPieces[0]),getBitBoardFromLocation({locationOfPieces[0].first + offset,locationOfPieces[0].second}));
+            moves.emplace_back(getBitBoardFromLocation(locationOfPieces[0]), getBitBoardFromLocation({
+                                   locationOfPieces[0].first + offset, locationOfPieces[0].second
+                               }));
             moves.back().isCastle = true;
             moves.back().leftCastle = isWhite_;
         }
@@ -682,7 +792,7 @@ std::vector<Move> Board::generateAllKingMoves(bool isWhite)
     return moves;
 }
 
-std::vector<Move> Board::generateRookMovesFromLocation(std::pair<int, int> pair, bool isWhite)
+std::vector<Move> Board::generateRookMovesFromLocation(const std::pair<int, int>& location, const bool isWhite) const
 {
     std::vector<Move> moves;
     std::pair<int, int> directions[] = {
@@ -697,7 +807,7 @@ std::vector<Move> Board::generateRookMovesFromLocation(std::pair<int, int> pair,
         for (int i = 1; i < 8; ++i)
         {
             std::pair<int, int> newLocation = {
-                pair.first + i * direction.first, pair.second + i * direction.second
+                location.first + i * direction.first, location.second + i * direction.second
             };
             if (!isPosInsideBoard(newLocation))
             {
@@ -707,7 +817,7 @@ std::vector<Move> Board::generateRookMovesFromLocation(std::pair<int, int> pair,
             {
                 break;
             }
-            moves.emplace_back(getBitBoardFromLocation(pair), getBitBoardFromLocation(newLocation));
+            moves.emplace_back(getBitBoardFromLocation(location), getBitBoardFromLocation(newLocation));
             if (isTileOccupiedByColor(newLocation, !isWhite))
             {
                 break;
@@ -717,7 +827,7 @@ std::vector<Move> Board::generateRookMovesFromLocation(std::pair<int, int> pair,
     return moves;
 }
 
-std::vector<Move> Board::generateBishopMovesFromLocation(std::pair<int, int> pair, bool isWhite)
+std::vector<Move> Board::generateBishopMovesFromLocation(const std::pair<int, int>& location, const bool isWhite) const
 {
     std::vector<Move> moves;
     std::pair<int, int> directions[] = {
@@ -732,7 +842,7 @@ std::vector<Move> Board::generateBishopMovesFromLocation(std::pair<int, int> pai
         for (int i = 1; i < 8; ++i)
         {
             std::pair<int, int> newLocation = {
-                pair.first + i * direction.first, pair.second + i * direction.second
+                location.first + i * direction.first, location.second + i * direction.second
             };
             if (!isPosInsideBoard(newLocation))
             {
@@ -742,7 +852,7 @@ std::vector<Move> Board::generateBishopMovesFromLocation(std::pair<int, int> pai
             {
                 break;
             }
-            moves.emplace_back(getBitBoardFromLocation(pair), getBitBoardFromLocation(newLocation));
+            moves.emplace_back(getBitBoardFromLocation(location), getBitBoardFromLocation(newLocation));
             if (isTileOccupiedByColor(newLocation, !isWhite))
             {
                 break;
