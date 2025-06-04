@@ -36,6 +36,7 @@ std::vector<std::pair<Move, int>> PerftTestUtil::PerftTest(Board board, int thre
   }
 
   std::vector<std::pair<Move, int>> resultVector;
+  resultVector.reserve(results_.size());
   for (int i = 0; i < results_.size(); i++)
   {
     resultVector.emplace_back(resultPositions_[i], results_[i]);
